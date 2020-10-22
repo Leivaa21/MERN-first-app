@@ -1,7 +1,7 @@
 Este proyecto tiene por proposito desarollar una aplicacion web con
 el stack MERN{
                 MongoDB
-                ExpressJS
+                Express
                 React
                 NodeJS
             }
