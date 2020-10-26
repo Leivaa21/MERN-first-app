@@ -8,6 +8,8 @@ console.log('Conectando a '+ URI);
 mongoose.connect(URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify:false
 });
 
 const connection = mongoose.connection;

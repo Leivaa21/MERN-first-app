@@ -1,13 +1,34 @@
 const userCtrl = {};
 
-userCtrl.getUsers = (req, res) => res.json({message: []})
+const User = require('../models/User');
 
-userCtrl.getUser = (req, res) => res.json({UserName: 'John Doe'})
+userCtrl.getUsers = async (req, res) => {
+    const users = await User.find();
+    res.json(users)
+}
 
-userCtrl.createUser = (req, res) => res.json({message: 'User registered!'})
+userCtrl.getUser = async (req, res) =>{     
+    const user = await User.findById(req.params.id);
+    res.json(user)
+}
+userCtrl.createUser = async (req, res) => {
+    const {userName, password} = req.body;
+    const newUser = new User({userName, password});
+    await newUser.save();
+    res.json('User registered!')
+}
 
-userCtrl.deleteUser = (req, res) => res.json({message: 'User deleted!'})
+userCtrl.deleteUser = (req, res) => {
+    User.findByIdAndDelete(req.params.id);
+    res.json('User deleted!')
+}
 
-userCtrl.updateUser = (req, res) => res.json({message: 'User updated!'})
-
+userCtrl.updateUser = async (req, res) => {
+    const {userName,password} = req.body;
+    await User.findOneAndUpdate(req.params.id, {
+        userName,
+        password        
+    });
+    res.json({message: 'User updated!'})
+}
 module.exports = userCtrl;
