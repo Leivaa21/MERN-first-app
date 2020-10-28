@@ -10,7 +10,7 @@ export default class Navigation extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <Link className="nav-link active" to="/">Notes<span class="sr-only">(current)</span></Link>
+                            <Link className="nav-link active" to="/">Notes<span className="sr-only">(current)</span></Link>
                             <Link className="nav-link" to="/create">New Note</Link>
                         </div>
                         <div className="navbar-nav ml-auto">
