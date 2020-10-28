@@ -6,7 +6,7 @@ const NoteSchema = new Schema({
         type: String,
         required: true
     },
-    author:String,
+    taskName:String,
     date: {
         type: Date,
         default: Date.now

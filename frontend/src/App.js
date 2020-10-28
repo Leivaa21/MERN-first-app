@@ -5,7 +5,7 @@ import './App.css';
 
 import Navigation from './components/Navigation'
 import Noteslist from './components/Noteslist'
-import CreateUser from './components/CreateUser'
+import CreateTask from './components/CreateTask'
 import CreateNote from './components/CreateNote'
 function App() {
   return (
@@ -15,8 +15,8 @@ function App() {
       <div className="container p-4">
         <Route path="/" exact component={Noteslist}/>
         <Route path="/edit/:id" component={CreateNote}/>
-        <Route path="/create" component={CreateNote}/>
-        <Route path="/user" component={CreateUser}/>
+        <Route path="/newNote" component={CreateNote}/>
+        <Route path="/tasklist" component={CreateTask}/>
       </div>
     </Router>
   );

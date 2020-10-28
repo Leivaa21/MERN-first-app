@@ -1,41 +1,41 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-export default class CreateUser extends Component {
+export default class CreateTask extends Component {
 
     state = {
-        users: [],
-        userName: ''
+        tasks: [],
+        taskName: ''
     }
     async componentDidMount() {
-        this.getUsers();
-        console.log(this.state.users);
+        this.getTasks();
+        console.log(this.state.tasks);
     }
 
-    getUsers = async () => {
-        const res = await axios.get('http://localhost:4000/api/users');
-        this.setState({users: res.data})
+    getTasks = async () => {
+        const res = await axios.get('http://localhost:4000/api/tasks');
+        this.setState({tasks: res.data})
     }
 
-    onChangeUserName = (e) => {
+    onChangeTaskName = (e) => {
         this.setState({
-            userName: e.target.value
+            taskName: e.target.value
         })
     }
 
      onSubmit = async e => {
         e.preventDefault();
-        await axios.post('http://localhost:4000/api/users', {
-            userName: this.state.userName
+        await axios.post('http://localhost:4000/api/tasks', {
+            taskName: this.state.taskName
         })
-        this.setState({userName:''})
-        this.getUsers()
+        this.setState({taskName:''})
+        this.getTasks()
     }
 
-    deleteUser = async (id) => {
-        await axios.delete('http://localhost:4000/api/users/' + id)
+    deleteTask = async (id) => {
+        await axios.delete('http://localhost:4000/api/tasks/' + id)
         console.log(id)
-        this.getUsers();
+        this.getTasks();
     }
 
     render() {
@@ -43,14 +43,14 @@ export default class CreateUser extends Component {
             <div className="row">
                 <div className="col-md-4">
                     <div className="card card-body">
-                        <h3>Register a User</h3>
+                        <h3>New task</h3>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    value={this.state.userName}
-                                    onChange={this.onChangeUserName} 
+                                    value={this.state.taskName}
+                                    onChange={this.onChangeTaskName} 
                                 />
                             </div>
                             <button type="submit" className="btn btn-primary">
@@ -62,13 +62,13 @@ export default class CreateUser extends Component {
                 <div className="col-md-8">
                     <ul className="list-group">
                         {
-                            this.state.users.map(user => (
+                            this.state.tasks.map(task => (
                                 <li 
                                     className="list-group-item list-group-item-action" 
-                                    key={user._id}
-                                    onDoubleClick={() => this.deleteUser(user._id)}
+                                    key={task.taskName}
+                                    onDoubleClick={() => this.deleteTask(task._id)}
                                     >
-                                    {user.userName}
+                                    {task.taskName}
                                 </li>)
                             )
                         }

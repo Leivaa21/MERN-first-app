@@ -5,8 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 export default class CreateNote extends Component {
 
     state = {
-        users: [],
-        userSelected: '',
+        tasks: [],
+        taskSelected: '',
         title:'',
         content:'',
         date: new Date(),
@@ -18,9 +18,9 @@ export default class CreateNote extends Component {
 
 
     async componentDidMount(){
-        const res = await axios.get('http://localhost:4000/api/users')
-        this.setState({users:res.data.map(user => user.userName), 
-        userSelected : res.data[0].userName
+        const res = await axios.get('http://localhost:4000/api/tasks')
+        this.setState({tasks:res.data.map(task => task.taskName), 
+        taskSelected : res.data[0].taskName
         })
         if(this.props.match.params.id){
             const res = await axios.get('http://localhost:4000/api/notes/' + this.props.match.params.id)
@@ -28,7 +28,7 @@ export default class CreateNote extends Component {
                 title: res.data.title,
                 content: res.data.content,
                 date: new Date(res.data.date),
-                userSelected: res.data.author,
+                taskSelected: res.data.taskName,
                 editing: true,
                 _id: this.props.match.params.id,
                 formTitle: 'Update a Note',
@@ -45,7 +45,7 @@ export default class CreateNote extends Component {
                 title: this.state.title,
                 content: this.state.content,
                 date: this.state.date,
-                author: this.state.userSelected
+                taskName: this.state.taskSelected
             }
             await axios.put('http://localhost:4000/api/notes/' + this.state._id, updateNote)
         }else{
@@ -53,7 +53,7 @@ export default class CreateNote extends Component {
                 title: this.state.title,
                 content: this.state.content,
                 date: this.state.date,
-                author: this.state.userSelected
+                taskName: this.state.taskSelected
             }
             await axios.post('http://localhost:4000/api/notes', newNote)
         }
@@ -64,6 +64,7 @@ export default class CreateNote extends Component {
         this.setState({
             [e.target.name] : e.target.value
         })
+        console.log(e.target.value)
     }
 
     onChangeDate = date => {
@@ -78,19 +79,19 @@ export default class CreateNote extends Component {
                     <h4>{this.state.formTitle}</h4>
 
 
-                        {/** SELECT USER */}
+                        {/** SELECT Task */}
                         
                         <div className="form-group">
                             <select
                                 className="form-control"
-                                name="userSelected"
-                                value={this.state.userSelected}
+                                name="taskSelected"
+                                value={this.state.taskSelected}
                                 onChange = {this.onInputChange}
                             >
                                 {
-                                    this.state.users.map(user =>
-                                    <option key={user} value={user}>
-                                        {user}
+                                    this.state.tasks.map(task =>
+                                    <option key={task} value={task}>
+                                        {task}
                                     </option>)
                                 }
                             </select>
